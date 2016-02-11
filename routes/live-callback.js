@@ -17,14 +17,14 @@ router.get('/', function (req, res) {
                     expiresIn = responseData['expires_in'];
                 if (accessToken && refreshToken && expiresIn) {
                     // Save the access token on a session. Using cookies in this case:
-                    res.cookie('access_token', accessToken, { maxAge: expiresIn * 1000});
-                    res.cookie('refresh_token', refreshToken);
+                    res.cookie('live_access_token', accessToken, { maxAge: expiresIn * 1000});
+                    res.cookie('live_refresh_token', refreshToken);
 
                     res.render('callback');
                 } else {
                     // Handle an authentication error response
                     res.render('error', {
-                        message: 'Invalid Live Connect Response',
+                        message: 'Invalid Connect Response',
                         error: {details: JSON.stringify(responseData, null, 2)}
                     });
                 }
@@ -34,7 +34,7 @@ router.get('/', function (req, res) {
         var authError = req.query['error'],
             authErrorDescription = req.query['error_description'];
         res.render('error', {
-            message: 'Live Connect Auth Error',
+            message: 'Live Auth Error',
             error: {status: authError, details: authErrorDescription}
         });
     }

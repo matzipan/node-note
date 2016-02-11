@@ -1,5 +1,5 @@
 {
-  "name": "onenote-nodejs-sample",
+  "name": "node-note",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,8 @@
     "debug": "~0.7.4",
     "jade": "~1.3.0",
     "request": "^2.34.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "multer": "~1.1.0",
+    "googleapis": "~2.1.7"
   }
 }

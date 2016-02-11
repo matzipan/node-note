@@ -1,5 +1,7 @@
 body {
     padding: 50px;
+    max-width: 960px;
+    margin: 0 auto;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,7 +9,18 @@ a {
     color: #00B7FF;
 }
 
-button {
-    padding: 10px 20px;
-    margin-bottom: 10px;
+.loginBtn {
+    margin: 3px 0;
+}
+
+.tick {
+    position: relative;
+    top: 2px;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+}
+
+.spinner {
+    margin-left: 5px;
 }

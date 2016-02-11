@@ -2,19 +2,16 @@ extends layout
 
 block content
   h1= title
-  button(type="button", id="loginBtn") Sign In
-  p OneNote Create Examples:
-  form(id="createExamples" name="createExamples", method="post")
-    button(type="submit", name="submit", value="text" disabled) Create OneNote Page with Text
-    br
-    button(type="submit", name="submit", value="textimage" disabled) Create OneNote Page with Text and Images
-    br
-    button(type="submit", name="submit", value="html" disabled) Create OneNote Page with a Screenshot of HTML
-    br
-    button(type="submit", name="submit", value="url" disabled) Create OneNote Page with a Screenshot of a URL
-    br
-    button(type="submit", name="submit", value="file" disabled) Create OneNote Page with an Embedded File
+  h3 Create from PDF printout
+  form(id="create" name="create", method="post",  enctype="multipart/form-data")
+    p Section:&nbsp;
+      select(name="section")
+        each section in sections
+          option(value="{\"id\": \"#{section.id}\", \"name\": \"#{section.name}\"}") #{section.name}
+    p PDF file:&nbsp;
+      input(type="file", name="attachment")
+
+    button(type="submit", name="submit", value="file") Create
     br
   script.
-    window.authUrl = '!{authUrl}';
   script(src="/javascripts/index.js")

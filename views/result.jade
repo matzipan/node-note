@@ -4,6 +4,8 @@ block content
   h1= title
   a(href='/') Go back
   br
-  p
-    a(href=resourceUrl, target='_onenote') Access submitted resource
-  pre #{body}
+  if errors.length != 0
+    pre #{JSON.stringify(errors, null, 2)}
+  if resourceUrl
+    p
+        a(href=resourceUrl, target='_onenote') View page

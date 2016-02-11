@@ -1,14 +1,27 @@
-var $loginBtn,
-    isLoggedIn;
+var loginPage = false;
+var interval;
 
 $(function () {
-    $loginBtn = $('#loginBtn');
-    updateLoginButton(false);
-    checkLogin();
-    $('#createExamples').find('button').each(function(){
-        $(this).on('mouseup',function(e){
-            $(e.target).after('<img src="images/spinner.gif" style="margin-left: 5px;"/>');
-            window.setTimeout(function(){disableCreateButtons(true);},0);
+    $('.loginBtn').each(function() {
+        loginPage = true;
+
+        var $this = $(this);
+        $this.click(function() {
+            var $spinner = $('<img src="images/spinner.gif" class="spinner">');
+            $this.after($spinner);
+            $this.attr("disabled", true);
+            $this.data("popup", openPopUp($this.data("url")))
+        })
+    });
+
+    $('#create button').each(function(){
+        var $this = $(this);
+        $this.click(function(e){
+            $this.after('<img src="images/spinner.gif" class="spinner">');
+            window.setTimeout(function() {
+                $this.attr("disabled", true);
+
+            }, 0);
         });
     });
 });
@@ -38,10 +51,6 @@ function openPopUp(url) {
     return popup;
 }
 
-function showLogin() {
-    openPopUp(window.authUrl);
-}
-
 function getCookie(name) {
     var cookies = document.cookie;
     name += "=";
@@ -58,54 +67,34 @@ function getCookie(name) {
     return null;
 }
 
-function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-}
-
-function disableCreateButtons(disabled) {
-    $('#createExamples').find('button').each(function () {
-        $(this).attr('disabled', disabled);
-    });
-}
-
-function disableLoginButton(disabled) {
-    $loginBtn.attr('disabled', disabled);
-}
-
-function updateLoginButton(isLoggedIn) {
-    $loginBtn.text(isLoggedIn ? 'Sign Out' : 'Sign In');
-    $loginBtn.off('click');
-    $loginBtn.on('click', function () {
-        disableLoginButton(true);
-        if (isLoggedIn) {
-            deleteAllCookies();
-        } else {
-            showLogin();
-        }
-    });
-    disableCreateButtons(!isLoggedIn);
-}
-
 function checkLogin() {
-    if (getCookie("access_token")) {
-        if (!isLoggedIn) {
-            disableLoginButton(false);
-            isLoggedIn = true;
-            updateLoginButton(isLoggedIn);
+    if (loginPage && getCookie("google_access_token") && getCookie("live_access_token")) {
+        clearInterval(interval);
+        location.reload();
+    } else if(loginPage) {
+        function cleanUp(actor) {
+            var $actor = $("#"+actor);
+            var $loginBtn = $actor.find(".loginBtn");
+            var popup = $actor.find(".loginBtn").data("popup");
+            if(popup && popup.closed) {
+                $actor.find(".spinner").remove();
+                if(!getCookie(actor+"_access_token")) {
+                    $loginBtn.attr("disabled", false);
+                }
+            }
+            if(getCookie(actor+"_access_token")) {
+                if($actor.find(".tick").length == 0) {
+                    $loginBtn.attr("disabled", true).after('<img src="/images/tick.png" class="tick">');
+                }
+            }
         }
-    } else {
-        if (isLoggedIn) {
-            disableLoginButton(false);
-            isLoggedIn = false;
-            updateLoginButton(isLoggedIn);
-        }
+
+        cleanUp("google");
+        cleanUp("live");
+    } else if(getCookie("google_access_token") == null || getCookie("live_access_token") == null) {
+        clearInterval(interval);
+        location.reload();
     }
 }
 
-window.setInterval(checkLogin, 1000);
+interval = window.setInterval(checkLogin, 500);

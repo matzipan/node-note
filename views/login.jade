@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  div(id="google")
+    button(type="button", class="loginBtn", "data-url"="#{authUrls.google}", disabled=googleLoggedIn) Sign In to Google
+    if googleLoggedIn
+        img(src="/images/tick.png", class="tick")
+  div(id="live")
+    button(type="button", class="loginBtn", "data-url"="#{authUrls.live}", disabled=liveLoggedIn) Sign In to Live
+    if liveLoggedIn
+        img(src="/images/tick.png", class="tick")
+
+  script(src="/javascripts/index.js")
