@@ -2,7 +2,7 @@ OneNote on Windows 10 is a killer app, especially with touchscreen support. Sinc
 when I switched back to Linux I had to use the not-feature-complete online version. The feature I missed the most was the ability to
 include print-outs of a PDF file. Since the API seems to cover this feature anyway, and Microsoft released a [good demo app](https://github.com/OneNoteDev/OneNoteAPISampleNodejs), I decided to [scratch my own itch](https://github.com/matzipan/node-note/commit/e4b5017f73466c75eb9aaa6e1b06b73d64329961), so I did some adjustments and added Google Drive upload support.
 
-The current application allows you to login via OAuth2 to your Google and Live accounts and then choose a PDF file and select from the destination sections in your OneNote main notebook. It also uploads the PDF file to a Google Drive folder with the same name as the selected OneNote section. The app looks for the Drive folder inside a folder names `Slidedecks` (it doesn't if it's in the root of your Drive or not, it will use the search function). This folder name is configurable in `config.js` under `drive.parentFolder`.
+The current application allows you to login via OAuth2 to your Google and Live accounts and then choose a PDF file and select from the destination sections in your OneNote main notebook. It also uploads the PDF file to a Google Drive folder with the same name as the selected OneNote section. The app looks for the Drive folder inside a folder names `Slidedecks` (it doesn't matter if it's in the root of your Drive or not, it will use the search function). This folder name is configurable in `config.js` under `drive.parentFolder`.
 
 ### Prerequisites
 
