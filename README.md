@@ -11,7 +11,7 @@ You need to setup your hosts file and add a host name that will resolve to the I
 ### Installation
 
 1. Get the app.
-3. You'll need to get your [Live OAuth2 app credentials](https://account.live.com/developers/applications/index) and [Google OAuth2 app credentials](https://console.developers.google.com/) and set the appropriate fields in `config.js`. When setting the redirect URI, set it to the domain name of your web site or the host name you have set up in your `hosts` file.
+3. You'll need to get your [Live OAuth2 app credentials](https://account.live.com/developers/applications/index) and [Google OAuth2 app credentials](https://console.developers.google.com/) and set the appropriate fields in `config.js`. When setting the redirect URI, set it to the domain name of your web site or the host name you have set up in your `hosts` file. The path for Google authentication is `/drive-callback` and for Live authentication is `/live-callback`.
 6. `npm install`.
 8. `npm start`.
 9. The app will now run on port `3000` on your desired host.
