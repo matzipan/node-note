@@ -1,68 +1,22 @@
+OneNote on Windows 10 is a killer app, especially with touchscreen support. Since I've been using this to take my lecture notes at University,
+when I switched back to Linux I had to use the not-feature-complete online version. The feature I missed the most was the ability to
+include print-outs of a PDF file. Since the API seems to cover this feature anyway, and Microsoft released a [good demo app](https://github.com/OneNoteDev/OneNoteAPISampleNodejs), I decided to [scratch my own itch](https://github.com/matzipan/node-note/commit/3b2bad1af3b9b51a3f89c711ae5881ad97bafa2f), so I did some adjustments and added Google Drive upload support.
 
-## OneNote API Node.js Sample README
-
-Created by Microsoft Corporation, 2014. Provided As-is without warranty. Trademarks mentioned here are the property of their owners.
-
-### API functionality demonstrated in this sample
-
-The following aspects of the API are covered in this sample. You can 
-find additional documentation at the links below.
-
-* [Log-in the user](http://msdn.microsoft.com/EN-US/library/office/dn575435.aspx)
-* [POST simple HTML to a new OneNote QuickNotes page](http://msdn.microsoft.com/EN-US/library/office/dn575428.aspx)
-* [POST multi-part message with image data included in the request](http://msdn.microsoft.com/EN-US/library/office/dn575432.aspx)
-* [POST page with a URL rendered as an image](http://msdn.microsoft.com/EN-US/library/office/dn575431.aspx)
-* [POST page with HTML rendered as an image](http://msdn.microsoft.com/en-us/library/office/dn575432.aspx)
-* [POST page with a PDF file rendered and attached](http://msdn.microsoft.com/EN-US/library/office/dn655137.aspx)
-* [Extract the returned oneNoteClientURL and oneNoteWebURL links](http://msdn.microsoft.com/EN-US/library/office/dn575433.aspx)
+The current application allows you to login via OAuth2 to your Google and Live accounts and then choose a PDF file and select from the destination sections in your OneNote main notebook. It also uploads the PDF file to a Google Drive folder with the same name as the selected OneNote section. The app looks for the Drive folder inside a folder names `Slidedecks` (it doesn't if it's in the root of your Drive or not, it will use the search function). This folder name is configurable in `config.js` under `drive.parentFolder`.
 
 ### Prerequisites
 
-**Tools and Libraries** you will need to download, install, and configure for your development environment. 
+You need to setup your hosts file and add a host name that will resolve to the IP address where you're running the app (or just upload the app on a server and use the server's host address), as Live and Google's OAuth2 server will need to redirect to that URL to send back the authentication token. On a Windows machine your `hosts` file is located at `C:\Windows\System32\drivers\etc\hosts`, on a Mac at `/private/etc/hosts` and on a Linux machine at `/etc/hosts`.
 
-* [Node.js](http://nodejs.org/download)
-* [Express framework for Node.js](http://expressjs.com)
-* You have a normal URL with hostname (not just an IP address) to use for the Redirect URL. If you run this from your own desktop, you'll need to modify your Hosts file (in C:\Windows\System32\drivers\etc for Windows machines and /private/etc for Macs) and map your local server IP address to a new domain name, as in the following example.
- ![](images/HostsFile.png)
+### Installation
 
-**Accounts**
+1. Get the app.
+3. You'll need to get your [Live OAuth2 app credentials](https://account.live.com/developers/applications/index) and [Google OAuth2 app credentials](https://console.developers.google.com/) and set the appropriate fields in `config.js`. When setting the redirect URI, set it to the domain name of your web site or the host name you have set up in your `hosts` file.
+6. `npm install`.
+8. `npm start`.
+9. The app will now run on port `3000` on your desired host.
+10. Enjoy.
 
-* As the developer, you'll need to [have a Microsoft account and get a client ID string](http://msdn.microsoft.com/EN-US/library/office/dn575426.aspx) 
-so your app can authenticate with the Microsoft Live connect SDK.
-* As the user of the sample, you'll need a Microsoft account so the OneNote API can 
-send the pages to your OneDrive.
+## License
 
-### Using the sample
-
-After you've setup your web server described above,....
-
-1. Download the repo as a ZIP file to your local computer, and extract the files. Or, clone the repository into a local copy of Git. 
-2. Go to the [Microsoft app registration page](https://account.live.com/developers/applications/index).
-3. On the API Settings page, set Mobile or desktop setting to No.
-4. Set the Redirect URI to the domain name of your web site, as in the following example. The root domain name must be unique, so if you use one domain for testing and another for production, you'll need to register separate client ids and secrets for each domain.
-![](images/OneNoteMSAScreen.png)
-5. On the App Setting page, copy the client ID and secret into the config.js file. 
-6. Open a command prompt and go to the root directory of the project. 
-7. Setup project dependencies with the `npm install` command.
-8. Run the app with the `npm start` command.
-9. Open a browser and navigate to the app running by default on port 3000.
-10. Login using your Microsoft account, and allow the app to create pages in your OneNote notebooks.
-
-### Version info
-
-This is the initial public release for this code sample.
-
-  
-### Learning more
-
-* Visit the [dev.onenote.com](http://dev.onenote.com) Dev Center
-* Contact us on [StackOverflow (tagged OneNote)](http://go.microsoft.com/fwlink/?LinkID=390182)
-* Follow us on [Twitter @onenotedev](http://www.twitter.com/onenotedev)
-* Read our [OneNote Developer blog](http://go.microsoft.com/fwlink/?LinkID=390183)
-* Explore the API using the [apigee.com interactive console](http://go.microsoft.com/fwlink/?LinkID=392871).
-Also, see the [short overview/tutorial](http://go.microsoft.com/fwlink/?LinkID=390179). 
-* [API Reference](http://msdn.microsoft.com/en-us/library/office/dn575437.aspx) documentation
-* [Debugging / Troubleshooting](http://msdn.microsoft.com/EN-US/library/office/dn575430.aspx)
-* [Getting Started](http://go.microsoft.com/fwlink/?LinkID=331026) with the OneNote API
-
-  
+Adapted by Zisu Andrei (2016) based on a sample project from Microsoft Corporation (2014). Provided As-is without warranty. Trademarks mentioned here are the property of their owners.
