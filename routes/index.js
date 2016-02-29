@@ -56,8 +56,7 @@ router.post('/', upload.single('attachment'), function (req, res) {
 
     googleConnect.getClient().setCredentials({
         access_token: req.cookies['google_access_token'],
-        token_type: req.cookies['google_token_type'],
-        expiry_date: req.cookies['google_expiry_date']
+        token_type: req.cookies['google_token_type']
     });
 
     // Render the API response with the created links or with error output

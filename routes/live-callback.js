@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
                 if (accessToken && refreshToken && expiresIn) {
                     // Save the access token on a session. Using cookies in this case:
                     res.cookie('live_access_token', accessToken, { maxAge: expiresIn * 1000});
-                    res.cookie('live_refresh_token', refreshToken);
+                    res.cookie('live_refresh_token', refreshToken, { maxAge: expiresIn * 1000});
 
                     res.render('callback');
                 } else {

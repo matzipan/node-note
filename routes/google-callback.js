@@ -16,13 +16,13 @@ router.get('/', function (req, res) {
           if(!err) {
               var accessToken = responseData['access_token'],
                   tokenType = responseData['token_type'],
-                  expiryDate = responseData['expiry_date'];
+                  expiryDate = Math.floor(responseData['expiry_date']/1000);
 
               if (accessToken && tokenType && expiryDate) {
                   // Save the access token on a session. Using cookies in this case:
                   res.cookie('google_access_token', accessToken, { maxAge: expiryDate});
-                  res.cookie('google_token_type', tokenType);
-                  res.cookie('google_expiry_date', expiryDate);
+                  res.cookie('google_token_type', tokenType, { maxAge: expiryDate});
+                  res.cookie('google_expiry_date', expiryDate, { maxAge: expiryDate});
 
                   res.render('callback');
               } else {
